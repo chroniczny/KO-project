@@ -27,3 +27,26 @@ body { font-family: Helvetica, Arial}
 .viewMail .mailInfo label { color: #777; font-weight: bold; min-width: 2.75em; text-align:right; display: inline-block; }
 .viewMail .message { padding: 0 1.25em; }
 
+
+
+/*--- Custom Buildings*/
+
+table td:nth-child(3) {
+    min-width: 8px;
+    min-height: 8px;
+    border: 1px solid #808080;
+}
+
+
+table span.starRating {
+    width: 4px;
+    height: 4px;
+    background-color: #5bc0de;
+    border-radius: 50%;
+}
+
+table span.hoverChosen, .table span.chosen {
+    background-color: #f0ad4e;
+}
+
+/*--- Loading Savings DATA*/

@@ -1,3 +1,5 @@
+'use strict';
+
 function Answer(text) { this.answerText = text; this.points = ko.observable(1); }
 
 function SurveyViewModel(question, pointsBudget, answers) {
@@ -15,6 +17,46 @@ function SurveyViewModel(question, pointsBudget, answers) {
         return total;
     }, this);
 }
+
+ko.bindingHandlers.starRating = { // example with STAR RATING
+    init: function(element, valueAccessor) {
+        $(element).addClass("starRating");
+        for (var i = 0; i < 5; i++)
+            $("<span>").appendTo(element);
+
+        // Handle mouse events on the stars
+        $("span", element).each(function(index) { // hoover on stars
+            $(this).hover(
+                function() { $(this).prevAll().add(this).addClass("hoverChosen") }, // color stars on prev and this (by add(this))
+                function() { $(this).prevAll().add(this).removeClass("hoverChosen") }
+            ).click(function() {
+                var observable = valueAccessor();  // Get the associated observable
+                observable(index+1);               // Write the new rating to it
+            });
+
+
+        });
+
+    },
+    update: function(element, valueAccessor) {
+        // Give the first x stars the "chosen" class, where x <= rating
+        var observable = valueAccessor();
+        $("span", element).each(function(index) {
+            $(this).toggleClass("chosen", index < observable());
+        });
+    }
+};
+
+ko.bindingHandlers.jqButton = {
+    init: function(element) {
+        $(element).button(); // Turns the element into a jQuery UI button
+    },
+    update: function(element, valueAccessor) { //
+        var currentValue = valueAccessor();
+        // Here we just update the "disabled" state, but you could update other properties too
+        $(element).button("option", "disabled", currentValue.enable === false); // the jQuery 'thing'
+    }
+};
 
 ko.bindingHandlers.fadeVisible = {
     init: function(element, valueAccessor) {

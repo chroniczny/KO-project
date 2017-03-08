@@ -5,7 +5,10 @@
     <title>KO-project</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
-    <script src="lib/sammy-latest.js" type="text/javascript"></script>
+    <!--<script src="lib/sammy-latest.js" type="text/javascript"></script>-->
+    <script src="lib/jquery-3.1.1.min.js"></script>
+    <script src="lib/bootstrap.min1.js"></script>
+    <!--<script src="lib/sammy-latest.js" type="text/javascript"></script>-->
 
 
 </head>
@@ -18,17 +21,17 @@
     <tbody data-bind="foreach: answers">
     <tr>
         <td data-bind="text: answerText"></td>
-        <td><select data-bind="options: $root.optionsPoints(), value: points"></select></td>
+        <td><select data-bind="options: $root.optionsPoints, value: points"></select></td>
+        <td data-bind="starRating: points"></td>
     </tr>
     </tbody>
 </table>
 
 <h3 data-bind="fadeVisible: pointsUsed() > pointsBudget">You've used too many points! Please remove some.</h3>
 <p>You've got <b data-bind="text: pointsBudget - pointsUsed()"></b> points left to use.</p>
+<!--<button data-bind="jqButton: {enable: pointsUsed() <= pointsBudget}, click: save">Finished</button>-->
 <button data-bind="enable: pointsUsed() <= pointsBudget, click: save">Finished</button>
-<script src="lib/jquery-1.7.1.min.js"></script>
-<!--<script src="lib/bootstrap.min.js"></script>-->
-<script src="lib/sammy-latest.js" type="text/javascript"></script>
+
 <script src="lib/knockout-3.4.1.js"></script>
 <script src="appCustomBuildings.js"></script>
 </body>
