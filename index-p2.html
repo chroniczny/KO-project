@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KO-p2</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css">-->
+    <!--<link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css">-->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<h1>Hell... KO-p2</h1>
+
+<!--<pre data-bind="text: bindingInfo"></pre>-->
+<div data-bind="dump: people, enable: false"></div>
+<div data-bind="dump: people()[0].firstName, enable: false"></div>
+<div data-bind="dump: people, enable: true"></div>
+
+ <!--one preticular JSON with name-->
+<section>
+    Records: <div data-bind="text: people().length" class="label-info short"></div>
+    <ul data-bind="foreach: people">
+        <li>
+            <span data-bind="text: firstName"></span>
+            <span data-bind="text: lastName"></span>
+            has children:
+            <ul data-bind="foreach: child ">
+                <li data-bind="text: firstName"></li>
+            </ul>
+            <div data-bind="dump: firstName.child, enable: true"></div>
+            <input data-bind="value: name" class="input-sm">
+        </li>
+    </ul>
+    <button data-bind="click: checkValue">Check value</button>
+
+
+</section>
+<script src="lib/jquery-3.1.1.min.js"></script>
+<script src="lib/knockout-3.4.1.js"></script>
+<script src="dump.js"></script>
+<script>
+    $(function() {
+        var vm = (function() {
+
+            var Person = function(first, last){
+                this.firstName = ko.observable(first);
+                this.lastName = ko.observable(last);
+                this.child = {};
+                this.pets = {};
+            };
+
+            var p1 = new Person('Hela', 'Siuxie');
+            var p2 = new Person('Ela', 'Garden');
+            var p2a = new Person('Max', 'Garden');
+            var p2b = new Person('Tony', 'Garden');
+
+            var p1a = new Person('Kelly', 'Siuxie');
+            p2.child = ko.observableArray([p2a, p2b]);
+            p1.child = ko.observableArray([p1a]);
+
+//            p2a.child = ko.observable(p2); // this line creates a cycle!!!
+
+            var people = ko.observableArray([p1, p2]);
+
+//            function checkValue(){
+//                alert(p1.name);
+//            }
+
+            var bindingInfo = ko.computed(function(){
+                return ko.toJSON(people, null, 2);
+            });
+
+            var vm = {
+                people: people,
+                bindingInfo: bindingInfo
+            };
+             return vm;
+
+
+        })();
+
+        ko.applyBindings(vm);
+
+    });
+</script>
+
+</body>
+</html>

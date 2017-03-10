@@ -50,3 +50,20 @@ table span.hoverChosen, .table span.chosen {
 }
 
 /*--- Loading Savings DATA*/
+ ul {
+     list-style: none;
+ }
+
+ ul li {
+     margin: 10px -10px;
+ }
+
+ .short {
+     width: 40px;
+     color: #ffffff;
+     padding: 1%;
+ }
+
+ ul span {
+     font-weight: bold;
+ }
